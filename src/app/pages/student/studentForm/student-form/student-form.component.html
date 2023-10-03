@@ -1,0 +1,92 @@
+<form *ngIf="!(loadingService.isLoading$ | async), else loading" [formGroup]="studentForm" (ngSubmit)="onSubmitClicked()" class="form-group text-center m-5">
+
+    <div class="row">
+
+      <div class="col-md-6">
+
+        <div class="form-floating mb-4">
+          <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Nombre" formControlName="firstName">
+          <label class="floatingInput">Nombre:</label>
+          <div *ngIf="!firstname.IsValid" class="alert alert-danger">
+            {{firstname.Message}}
+          </div>
+        </div>
+  
+        <div class="form-floating mb-4">
+          <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Apellido" formControlName="lastName">
+          <label for="lastName" class="floatingInput">Apellido:</label>
+          <div *ngIf="!lastname.IsValid" class="alert alert-danger">
+            {{lastname.Message}}
+          </div>
+        </div>
+  
+        <div class="form-floating mb-4">
+          <input type="text" class="form-control" id="email" name="email" placeholder="Correo" formControlName="email">
+          <label for="email" class="floatingInput">Correo:</label>
+          <div *ngIf="!email.IsValid" class="alert alert-danger">
+            {{email.Message}}
+          </div>
+        </div>
+  
+        <div class="form-floating mb-4">
+          <input type="text" class="form-control" id="phone" name="phone" placeholder="Telefono" formControlName="phone">
+          <label for="phone" class="floatingInput">Telefono:</label>
+          <div *ngIf="!phone.IsValid" class="alert alert-danger">
+            {{phone.Message}}
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-md-6">
+
+        <div class="form-floating  mb-4">
+          <select name="nationality" id="nationality" class="form-select" formControlName="nationality">
+            <option selected="">Seleccione una nacionalidad</option>
+            <option value="dominicano">Rep. Dom.</option>
+            <option value="argentina">Argentina</option>
+            <option value="guatemala">Guatemala</option>
+            <option value="el salvador">El Salvador</option>
+          </select>
+          <label for="nationality" class="floatingInput">Nacionalidad:</label>
+          <div *ngIf="!nationality.IsValid" class="alert alert-danger">
+            {{nationality.Message}}
+          </div>
+        </div>
+  
+        <div class="form-floating mb-4">
+          <input type="text" class="form-control" id="churchName" name="churchName" placeholder="Iglesia" formControlName="churchName">
+          <label for="churchName" class="floatingInput">Iglesia:</label>
+          <div *ngIf="!churchname.IsValid" class="alert alert-danger">
+            {{churchname.Message}}
+          </div>
+        </div>
+  
+        <div class="mb-4 form-check form-check-inline">
+          <input type="checkbox" class="form-check-input" id="hasBagFund" name="hasBagFund" formControlName="hasBagFund">
+          <label for="hasBagFund" class="form-check-label">¿Tiene Bolsa?</label>
+        </div>
+  
+        <div *ngIf="studentForm.get('hasBagFund')?.value === true" class="form-floating mb-4">
+          <input type="number" class="form-control" id="hoursQty" name="hoursQty" placeholder="Cantidad de Horas" formControlName="hoursQty">
+          <label for="hoursQty" class="floatingInput">Cantidad de Horas:</label>
+        </div>
+  
+        <div class="form-floating mb-4">
+          <input type="date" class="form-control" name="admissionDate" id="admissionDate" formControlName="admissionDate">
+          <label for="admissionDate" class="floatingInput">Fecha de Ingreso:</label>
+          <div *ngIf="!admissiondate.IsValid" class="alert alert-danger">
+            {{admissiondate.Message}}
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+    
+    <button class="btn btn-primary mt-3" type="submit" [disabled]="!studentForm.valid">Registrar</button>
+</form>
+
+<ng-template #loading>
+  <app-loading></app-loading>
+</ng-template>

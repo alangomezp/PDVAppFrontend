@@ -1,0 +1,92 @@
+<div>
+
+    <table *ngIf="(students.length !== 0); else temp" class="table table-hover text-center mt-5">
+        <thead class="table-dark">
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Telefono</th>
+                <th>Nacionalidad</th>
+                <th>Bolsa</th>
+                <th>Horas de Bolsa</th>
+                <th>Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of students">
+                <td>{{item.firstName | titlecase}}</td>
+                <td>{{item.lastName | titlecase}}</td>
+                <td>{{item.phone}}</td>
+                <td>{{item.nationality | titlecase}}</td>
+                <td>
+                    <fa-icon [hidden]="!item.hasBagFund" [icon]="faCheck"></fa-icon>
+                    <fa-icon [hidden]="item.hasBagFund" [icon]="faMinus"></fa-icon>
+                </td>
+                <td>
+                    
+                    <span [hidden]="!(item.hoursQty !== null)">{{item.hoursQty}}</span>
+                    <fa-icon [hidden]="(item.hoursQty !== null)" [icon]="faMinus"></fa-icon>
+                </td>
+                <td>
+                    <button (click)="onDeleteClicked(item.id)" class="btn btn-outline-danger mr-2">
+                        <fa-icon [icon]="faTrash"></fa-icon>
+                    </button>
+                    <button class="btn btn-outline-primary" (click)="modalService.open(content, item); setEditFormInputs()">
+                        <fa-icon [icon]="faEdit"></fa-icon>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<ng-template #temp>
+    <div class="text-center mt-5">
+        <h2>No hay datos para mostrar</h2>
+    </div>
+</ng-template>
+
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Modificar Datos</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+
+        <form [formGroup]="editStudentForm">
+            <div class="form-floating mb-3">
+                <input type="text" name="firstname" class="form-control" placeholder="Nombre" formControlName="firstname">
+                <label for="firstname" class="floatingInput">Nombre:</label>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input type="text" name="lastname" class="form-control" placeholder="Apellido" formControlName="lastname">
+                <label for="lastname" class="floatingInput">Apellido:</label>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input type="text" name="email" class="form-control" placeholder="Correo" formControlName="email">
+                <label for="email" class="floatingInput">Correo:</label>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input type="text" name="phone" class="form-control" placeholder="Telefono" formControlName="phone">
+                <label for="phone" class="floatingInput">Telefono:</label>
+            </div>
+
+            <div class="mb-3 form-check form-check-inline">
+                <input type="checkbox" class="form-check-input" id="hasBagFund" name="hasBagFund" formControlName="hasBagFund" formControlName="hasBagFund">
+                <label for="hasBagFund" class="form-check-label">¿Tiene Bolsa?</label>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input type="number" name="hoursqty" class="form-control" placeholder="Horas de Bolsa" formControlName="hoursqty">
+                <label for="hoursqty" class="floatingInput">Horas de Bolsa:</label>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="onSaveEditClicked()">Save</button>
+    </div>
+</ng-template>

@@ -1,0 +1,37 @@
+<h1 class="m-3">Gestion de Estudiantes:</h1>
+    
+<div class="container">
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link" [ngClass]="{'active': (selectTabService.selectedTabId$ | async) === 'form'}" aria-current="page" (click)="selectTab($event)" id="form">Registro</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [ngClass]="{'active': (selectTabService.selectedTabId$ | async) === 'gestion'}" (click)="selectTab($event)" id="gestion">Gestionar</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Link</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link disabled">Disabled</a>
+    </li>
+  </ul>
+
+  <app-student-form 
+    *ngIf="(selectTabService.selectedTabId$ | async) === 'form'" 
+    (onSubmitClickedEvent)="addStudent($event)">
+  </app-student-form>
+
+  <app-dashboard 
+    *ngIf="(selectTabService.selectedTabId$ | async) === 'gestion'" 
+    [students]="students"
+    (onGetEvent)="getStudents()" 
+    (onDeleteEvent)="deleteStudent($event)"
+    (onEditEvent)="updateStudent($event)">
+  </app-dashboard>
+
+  <ng-template #loading>
+    <app-loading></app-loading>
+  </ng-template>
+</div>
+
+    

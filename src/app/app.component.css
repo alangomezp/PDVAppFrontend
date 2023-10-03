@@ -1,0 +1,24 @@
+body{
+    margin: 0px;
+    padding: 0px;
+    width: 100vw;
+    height: 100vh;
+}
+
+
+.layout {
+  width: 100%;
+  min-height: 100vh; 
+  
+    display: grid;
+    grid:
+      "sidebar body" 1fr
+      / 20%;
+    gap: 0px;
+  }
+
+  .sidebar { 
+    grid-area: sidebar;
+  }
+
+  .body { grid-area: body; }
